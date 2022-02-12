@@ -88,7 +88,7 @@ void calc_target_value(double lowest,double current)
 	W1_f1 = current * BR_FALL1;
 	W1_f2 = current * BR_FALL2;
 	
-	MLOGE("[outburst ]: (%lf) -> (%lf) ~~ (%lf) ",lowest,lowest*BR_OB1,lowest*BR_OB2);
+	MLOGW("[outburst ]: (%lf) -> (%lf) ~~ (%lf) ",lowest,lowest*BR_OB1,lowest*BR_OB2);
 	
 	MLOGE("[Rise wave]: (%lf) -> (%lf) -> (%lf) ",current,W1_r1,W1_r2);
 	MLOGM("[Fall wave]: (%lf) -> (%lf) -> (%lf) ",current,W1_f1,W1_f2);
