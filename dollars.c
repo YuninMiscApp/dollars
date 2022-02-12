@@ -63,6 +63,7 @@
 #define BR_FALL1 0.7
 #define BR_FALL2 0.49
 #define BR_FALL3 0.343
+#define BR_FALL4 0.168
 
 #define BR_RISE1 1.7
 #define BR_RISE2 2.2
@@ -74,18 +75,50 @@
 #define BR_CB2 0.88
 
 
+////////////////////////////////////////////////////
+
+void wave_double_model(double price)
+{
+	double W1_r1,W1_f1,W1_r2,W1_r3;
+	double W2base;
+	double W2_r1,W2_f1,W2_r2;
+	double Slump1,Slump2;
+	
+	//第一波主升浪 wave
+	W1_r1 = price * BR_RISE1;    //第一波放量拉高
+	W1_f1 = W1_r1 * BR_FALL1;	 //第一波回调
+	W1_r2 = W1_f1 * BR_RISE1;	 //第二波拉高
+	W1_r3 = W1_r2 * BR_RISE2;    //第三波快速拉高冲顶,并伴随着放量
+	
+	//第二波主升浪,走出双头模型,M头顶
+	W2base = W1_r3 * BR_FALL2;   //双头前的,第一波大的回调,然后盘整.
+	W2_r1 = W2base * BR_RISE1;	 //第二波放量拉高
+	W2_f1 = W2_r1 * BR_FALL1;	 //第二波回调
+	W2_r2 = W2_f1 * BR_RISE2;    //第二波快速拉高冲顶,并伴随着放量
+	
+	//暴跌
+	Slump1 = W2_r2*BR_FALL3;
+	Slump2 = W2_r2*BR_FALL4;
+	
+	MLOGW("[The first wave]:  (%lf) -> (%lf) -> (%lf) -> (%lf) -> (%lf) ",price,W1_r1,W1_f1,W1_r2,W1_r3);
+	MLOGW("[The second wave]: (%lf) -> (%lf) -> (%lf) -> (%lf)",W2base,W2_r1,W2_f1,W2_r2);
+	MLOGM("[The slump]: (%lf) -> (%lf) ",Slump1,Slump2);
+}
+
 int
 main(int argc, char *argv[])
 {
 	double price = 0;
+	
 	if (argc != 2) {
 		MLOGE("Usage: %s <lowest price>\n", argv[0]);
 		return -1;
 	}
 	price = atof(argv[1]);
+	MPRINT("price=%lf, Tmin=%lf, Tmax=%lf\n",price,price*BR_OB1,price*BR_OB2);
+	//
+	wave_double_model(price);
 	
-	MPRINT("price:%lf\n",price);
-		
 	return 0;
 }
 
