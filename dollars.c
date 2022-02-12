@@ -82,7 +82,7 @@ void wave_double_model(double price)
 	double W1_r1,W1_f1,W1_r2,W1_r3;
 	double W2base;
 	double W2_r1,W2_f1,W2_r2;
-	double Slump1,Slump2;
+	double Slump1,Slump2,Slump3;
 	
 	//第一波主升浪 wave
 	W1_r1 = price * BR_RISE1;    //第一波放量拉高
@@ -93,16 +93,17 @@ void wave_double_model(double price)
 	//第二波主升浪,走出双头模型,M头顶
 	W2base = W1_r3 * BR_FALL2;   //双头前的,第一波大的回调,然后盘整.
 	W2_r1 = W2base * BR_RISE1;	 //第二波放量拉高
-	W2_f1 = W2_r1 * BR_FALL1;	 //第二波回调
-	W2_r2 = W2_f1 * BR_RISE2;    //第二波快速拉高冲顶,并伴随着放量
+	W2_f1 = W2_r1 * BR_CB1;	     //第二波轻微回调或横盘整理(1周左右)
+	W2_r2 = W2base * BR_RISE2;    //第二波快速拉高冲顶,并伴随着放量
 	
 	//暴跌
-	Slump1 = W2_r2*BR_FALL3;
-	Slump2 = W2_r2*BR_FALL4;
+	Slump1 = W2_r2*BR_FALL2;
+	Slump2 = W2_r2*BR_FALL3;
+	Slump3 = W2_r2*BR_FALL4;
 	
 	MLOGW("[The first wave]:  (%lf) -> (%lf) -> (%lf) -> (%lf) -> (%lf) ",price,W1_r1,W1_f1,W1_r2,W1_r3);
 	MLOGW("[The second wave]: (%lf) -> (%lf) -> (%lf) -> (%lf)",W2base,W2_r1,W2_f1,W2_r2);
-	MLOGM("[The slump]: (%lf) -> (%lf) ",Slump1,Slump2);
+	MLOGM("[The slump]: (%lf) -> (%lf) -> (%lf)",Slump1,Slump2,Slump3);
 }
 
 int
