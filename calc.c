@@ -77,57 +77,37 @@
 
 ////////////////////////////////////////////////////
 
-void calc_target_value(double price)
+void calc_target_value(double lowest,double current)
 {
 	double W1_r1,W1_r2;
 	double W1_f1,W1_f2;
 	
-	W1_r1 = price * BR_RISE1;
-	W1_r2 = price * BR_RISE2;
+	W1_r1 = current * BR_RISE1;
+	W1_r2 = current * BR_RISE2;
 	
-	W1_f1 = price * BR_FALL1;
-	W1_f2 = price * BR_FALL2;
+	W1_f1 = current * BR_FALL1;
+	W1_f2 = current * BR_FALL2;
 	
-	MLOGE("[Rise wave]: (%lf) -> (%lf) -> (%lf) ",price,W1_r1,W1_r2);
-	MLOGM("[Fall wave]: (%lf) -> (%lf) -> (%lf) ",price,W1_f1,W1_f2);
+	MLOGE("[outburst ]: (%lf) -> (%lf) ~~ (%lf) ",lowest,lowest*BR_OB1,lowest*BR_OB2);
+	
+	MLOGE("[Rise wave]: (%lf) -> (%lf) -> (%lf) ",current,W1_r1,W1_r2);
+	MLOGM("[Fall wave]: (%lf) -> (%lf) -> (%lf) ",current,W1_f1,W1_f2);
 }
 
 int
 main(int argc, char *argv[])
 {
-	double price = 0;
+	double lowest = 0,current = 0;
 	
-	if (argc != 2) {
-		MLOGE("Usage: %s <price>\n", argv[0]);
+	if (argc != 3) {
+		MLOGE("Usage: %s <lowest> <current>\n", argv[0]);
 		return -1;
 	}
-	price = atof(argv[1]);
+	lowest = atof(argv[1]);
+	current = atof(argv[2]);
 	//
-	calc_target_value(price);
+	calc_target_value(lowest,current);
 	
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
