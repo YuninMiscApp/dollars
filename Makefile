@@ -5,16 +5,16 @@ TARGET_NAME ?= dollars
 
 
 all: FORCE
-	gcc -Wall -o $(TARGET_NAME) $(TARGET_NAME).c
+	gcc -Wall -o dollars dollars.c
+	gcc -Wall -o calc calc.c
 
 clean: FORCE
-	@rm -f $(TARGET_NAME)
+	$(shell rm -f `ls *.c | sed 's/\(.*\)\.c/\1/g' | xargs `)
 
 
 distclean: clean FORCE
-
+	@echo "clean...."
 
 PHONY += FORCE
 FORCE:
-
 
