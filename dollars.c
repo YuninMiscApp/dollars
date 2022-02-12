@@ -31,13 +31,47 @@
 	printf("%s\n",COLOUR_NONE);\
 })
 
-#define MLOGV(args...)	_MLOG_(COLOUR_NONE, __FILE__, __LINE__, args)
-#define MLOGD(args...)	_MLOG_(COLOUR_WHITE, __FILE__, __LINE__, args)
-#define MLOGI(args...)	_MLOG_(COLOUR_L_CYAN, __FILE__, __LINE__, args)
+#define MLOGV(args...)	_MLOG_(COLOUR_NONE   , __FILE__, __LINE__, args)
+#define MLOGD(args...)	_MLOG_(COLOUR_WHITE  , __FILE__, __LINE__, args)
+#define MLOGI(args...)	_MLOG_(COLOUR_L_CYAN , __FILE__, __LINE__, args)
 #define MLOGM(args...)	_MLOG_(COLOUR_L_GREEN, __FILE__, __LINE__, args)
-#define MLOGW(args...)	_MLOG_(COLOUR_YELLOW, __FILE__, __LINE__, args)
-#define MLOGE(args...)	_MLOG_(COLOUR_L_RED, __FILE__, __LINE__, args)
-#define MLOGF(args...)	_MLOG_(COLOUR_RED, __FILE__, __LINE__, args)
+#define MLOGW(args...)	_MLOG_(COLOUR_YELLOW , __FILE__, __LINE__, args)
+#define MLOGE(args...)	_MLOG_(COLOUR_L_RED  , __FILE__, __LINE__, args)
+#define MLOGF(args...)	_MLOG_(COLOUR_RED    , __FILE__, __LINE__, args)
+
+#define MPRINT(args...) printf(args)
+
+/***********************************
+ * 目标价：T
+ * 下跌系数：fall
+ * 上涨系数：rise
+ * 双头系数：double
+ * 爆发系数：outburst
+ * 回调系数: callback
+ ********************************
+ * T(fall1) = Val * 0.7
+ * T(fall2) = Val * 0.49
+ * T(fall3) = Val * 0.343
+ * T(r1) = Val * 1.7
+ * T(r2) = Val * 2.2
+ * T(OB1) = Val * 4.45
+ * T(OB2) = Val * 5.76
+ * T(CB1)=Val * 0.95
+ * T(CB2)=Val * 0.88
+***********************************/
+
+#define BR_FALL1 0.7
+#define BR_FALL2 0.49
+#define BR_FALL3 0.343
+
+#define BR_RISE1 1.7
+#define BR_RISE2 2.2
+
+#define BR_OB1 4.45
+#define BR_OB2 5.76
+
+#define BR_CB1 0.95
+#define BR_CB2 0.88
 
 
 int
@@ -48,8 +82,10 @@ main(int argc, char *argv[])
 		MLOGE("Usage: %s <lowest price>\n", argv[0]);
 		return -1;
 	}
-	price = 1.0/3;
-	MLOGD("price:%lf\n",price);
+	price = atof(argv[1]);
+	
+	MPRINT("price:%lf\n",price);
+		
 	return 0;
 }
 
